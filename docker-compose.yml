@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  keycloak:
+    image: jboss/keycloak
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+      - KEYCLOAK_IMPORT=/tmp/realm.json
+    ports:
+      - 8080:8080
+    volumes:
+      - ${PWD}/realm.json:/tmp/realm.json
