@@ -7,6 +7,7 @@ import { AppModule } from 'src/app.module'
 export abstract class BaseTest {
   static app: INestApplication
   static adminToken: string
+  static commonToken: string
 
   static async before() {
     jest.setTimeout(30000)
@@ -15,7 +16,7 @@ export abstract class BaseTest {
       imports: [AppModule],
     }).compile()
 
-    const response = await axios.post(
+    const { data: adminClient } = await axios.post(
       `${process.env.KEYCLOAK_SERVER_URL}/auth/realms/master/protocol/openid-connect/token`,
       stringify({
         client_id: 'admin-cli',
@@ -26,8 +27,20 @@ export abstract class BaseTest {
       { headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, timeout: 15000 },
     )
 
+    const { data: skoreFrontClient } = await axios.post(
+      `${process.env.KEYCLOAK_SERVER_URL}/auth/realms/skore/protocol/openid-connect/token`,
+      stringify({
+        client_id: 'skore-front',
+        grant_type: 'password',
+        username: 'renato',
+        password: 'bilu123',
+      }),
+      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, timeout: 15000 },
+    )
+
     BaseTest.app = await moduleRef.createNestApplication().init()
-    BaseTest.adminToken = response.data.access_token
+    BaseTest.adminToken = adminClient.access_token
+    BaseTest.commonToken = skoreFrontClient.access_token
   }
 
   before() {
@@ -36,6 +49,10 @@ export abstract class BaseTest {
 
   get adminToken(): string {
     return BaseTest.adminToken
+  }
+
+  get commonToken(): string {
+    return BaseTest.commonToken
   }
 
   get<TInput = any, TResult = TInput>(type: Type<TInput>): TResult {

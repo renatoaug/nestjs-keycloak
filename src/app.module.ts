@@ -1,9 +1,19 @@
 import { HttpModule, Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
-import { CreatePolicyService, CreateResourceService, CreateScopeService } from 'src/service'
+import {
+  CheckResourcePermissionService,
+  CreatePolicyService,
+  CreateResourceService,
+  CreateScopeService,
+} from 'src/service'
 
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true }), HttpModule],
-  providers: [CreateResourceService, CreateScopeService, CreatePolicyService],
+  providers: [
+    CreateResourceService,
+    CreateScopeService,
+    CreatePolicyService,
+    CheckResourcePermissionService,
+  ],
 })
 export class AppModule {}
