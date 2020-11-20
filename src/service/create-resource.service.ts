@@ -20,7 +20,7 @@ export class CreateResourceService {
     resource: Resource,
   ): Promise<Resource> {
     try {
-      const response = await this.httpService
+      const { data } = await this.httpService
         .post(
           `${this.keycloakServerUrl}/auth/admin/realms/${realm}/clients/${clientId}/authz/resource-server/resource`,
           {
@@ -38,7 +38,7 @@ export class CreateResourceService {
         )
         .toPromise()
 
-      return response.data as Resource
+      return data as Resource
     } catch (error) {
       Logger.error('Error on trying to create client resource', error, CreateResourceService.name)
     }

@@ -30,7 +30,7 @@ export class CreatePolicyService {
       if (policy.isUser()) params['users'] = policy.users
       if (policy.isGroup()) params['groups'] = policy.groups
 
-      const response = await this.httpService
+      const { data } = await this.httpService
         .post(
           `${this.keycloakServerUrl}/auth/admin/realms/${realm}/clients/${clientId}/authz/resource-server/policy/${policy.type}`,
           params,
@@ -42,7 +42,7 @@ export class CreatePolicyService {
         )
         .toPromise()
 
-      return response.data as Policy
+      return data as Policy
     } catch (error) {
       Logger.error('Error on trying to create client policy', error, CreatePolicyService.name)
     }

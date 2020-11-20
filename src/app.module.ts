@@ -1,10 +1,11 @@
 import { HttpModule, Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import {
-  CheckResourcePermissionService,
   CreatePolicyService,
   CreateResourceService,
   CreateScopeService,
+  CheckResourcePermissionService,
+  GetUserPermissionsService,
 } from 'src/service'
 
 @Module({
@@ -14,6 +15,7 @@ import {
     CreateScopeService,
     CreatePolicyService,
     CheckResourcePermissionService,
+    GetUserPermissionsService,
   ],
 })
 export class AppModule {}
