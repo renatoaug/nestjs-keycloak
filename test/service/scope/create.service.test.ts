@@ -1,22 +1,39 @@
-import { suite, test, timeout } from '@testdeck/jest'
+import { suite, test } from '@testdeck/jest'
 import { Scope } from 'src/domain'
 import { CreateScopeService } from 'src/service'
 import { BaseTest } from 'test/base-test'
+import * as faker from 'faker'
 
 @suite('Create Scope Service')
 export class CreateScopeServiceTest extends BaseTest {
-  @test(timeout(10000))
+  @test()
   async 'Given a valid scope then create'() {
     const service = super.get(CreateScopeService)
-    const scope = new Scope('find')
+    const scope = new Scope(faker.hacker.verb())
 
     const response = await service.perform(
       'skore',
-      '46a58bf9-9180-4643-8b34-4ec3cd6bb3ad',
+      '7a167d98-54d7-4a8a-8464-d25a24b26385',
       super.adminToken,
       scope,
     )
 
-    console.info('Scope', response)
+    expect(scope.name).toEqual(response.name)
+  }
+
+  @test()
+  async 'Given an invalid scope then throw error'() {
+    const service = super.get(CreateScopeService)
+
+    try {
+      await service.perform(
+        'skore',
+        '7a167d98-54d7-4a8a-8464-d25a24b26385',
+        super.adminToken,
+        {} as Scope,
+      )
+    } catch (error) {
+      expect(error).toBeDefined()
+    }
   }
 }

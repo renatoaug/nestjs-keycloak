@@ -37,6 +37,8 @@ export class CreateScopeService {
       return response.data as Scope
     } catch (error) {
       Logger.error('Error on trying to create client scope', error, CreateScopeService.name)
+
+      throw error
     }
   }
 }

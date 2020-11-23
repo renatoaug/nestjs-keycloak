@@ -2,13 +2,14 @@ import { suite, test } from '@testdeck/jest'
 import { Resource } from 'src/domain'
 import { CreateResourceService } from 'src/service'
 import { BaseTest } from 'test/base-test'
+import * as faker from 'faker'
 
 @suite('Create Resource Service')
 export class CreateResourceServiceTest extends BaseTest {
   @test()
   async 'Given a valid resource then create'() {
     const service = super.get(CreateResourceService)
-    const resource = new Resource('folderId', 'Testing')
+    const resource = new Resource(faker.name.title(), faker.random.word())
     resource.type = 'urn:folders:root'
     resource.attributes = { key: 'value' }
 
