@@ -39,7 +39,7 @@ export class CreateResourceServiceTest extends BaseTest {
         resource,
       )
     } catch (error) {
-      expect(error.message).toEqual('Name or displayName is blank')
+      expect(error.message).toEqual('Name or displayName is missing')
     }
   }
 }

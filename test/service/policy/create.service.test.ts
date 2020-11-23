@@ -3,6 +3,7 @@ import { GroupPolicy, UserPolicy } from 'src/domain'
 import { CreatePolicyService } from 'src/service'
 import { BaseTest } from 'test/base-test'
 import { FactoryHelper } from 'test/helper'
+import * as faker from 'faker'
 
 @suite('Create Policy Service')
 export class CreatePolicyServiceTest extends BaseTest {
@@ -11,7 +12,7 @@ export class CreatePolicyServiceTest extends BaseTest {
     const user = await new FactoryHelper(super.adminToken).createUser()
 
     const service = super.get(CreatePolicyService)
-    const policy = new UserPolicy('User Policy Test')
+    const policy = new UserPolicy(faker.name.title())
     policy.users = [user.id]
 
     const response = await service.perform(
@@ -29,9 +30,11 @@ export class CreatePolicyServiceTest extends BaseTest {
 
   @test()
   async 'Given an group-based policy then create'() {
+    const group = await new FactoryHelper(super.adminToken).createGroup()
+
     const service = super.get(CreatePolicyService)
-    const policy = new GroupPolicy('Group Policy Test')
-    policy.groups = [{ id: 'e06bebef-8e60-4c59-b39a-9f7abcaa5f70', path: '/Skoreans' }]
+    const policy = new GroupPolicy(faker.name.title())
+    policy.groups = [{ id: group.id, path: `/${group.name}` }]
 
     const response = await service.perform(
       'skore',
@@ -40,6 +43,9 @@ export class CreatePolicyServiceTest extends BaseTest {
       policy,
     )
 
-    console.info('Policy', response)
+    expect(response.name).toEqual(policy.name)
+    expect(response.type).toEqual(policy.type)
+    expect(response.logic).toEqual(policy.logic)
+    expect(response.decisionStrategy).toEqual(policy.decisionStrategy)
   }
 }

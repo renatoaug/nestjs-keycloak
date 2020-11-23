@@ -44,7 +44,6 @@ export class CreatePolicyService {
 
       return data as Policy
     } catch (error) {
-      console.log('=========', error)
       Logger.error('Error on trying to create client policy', error, CreatePolicyService.name)
     }
   }

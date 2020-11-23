@@ -20,7 +20,7 @@ export class CreateResourceService {
     resource: Resource,
   ): Promise<Resource> {
     try {
-      if (!resource.name || !resource.displayName) throw Error('Name or displayName is blank')
+      if (!resource.name || !resource.displayName) throw Error('Name or displayName is missing')
 
       const { data } = await this.httpService
         .post(
