@@ -20,6 +20,8 @@ export class CreateResourceService {
     resource: Resource,
   ): Promise<Resource> {
     try {
+      if (!resource.name || !resource.displayName) throw Error('Name or displayName is blank')
+
       const { data } = await this.httpService
         .post(
           `${this.keycloakServerUrl}/auth/admin/realms/${realm}/clients/${clientId}/authz/resource-server/resource`,
@@ -41,6 +43,8 @@ export class CreateResourceService {
       return data as Resource
     } catch (error) {
       Logger.error('Error on trying to create client resource', error, CreateResourceService.name)
+
+      throw error
     }
   }
 }

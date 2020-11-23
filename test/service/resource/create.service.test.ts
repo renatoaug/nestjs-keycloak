@@ -25,4 +25,21 @@ export class CreateResourceServiceTest extends BaseTest {
     expect(response.displayName).toEqual(resource.displayName)
     expect(response.attributes).toBeDefined()
   }
+
+  @test()
+  async 'Given an invalid resource then throw error'() {
+    const service = super.get(CreateResourceService)
+    const resource = new Resource(null, faker.random.word())
+
+    try {
+      await service.perform(
+        'skore',
+        '7a167d98-54d7-4a8a-8464-d25a24b26385',
+        super.adminToken,
+        resource,
+      )
+    } catch (error) {
+      expect(error.message).toEqual('Name or displayName is blank')
+    }
+  }
 }
