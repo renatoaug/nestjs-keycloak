@@ -21,6 +21,5 @@ module.exports = {
   collectCoverage: true,
   forceExit: true,
   coverageDirectory: 'coverage',
-  // setupFiles: ['./jest-setup.ts'],
   testTimeout: 10000,
 }

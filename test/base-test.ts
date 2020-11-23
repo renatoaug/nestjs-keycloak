@@ -16,31 +16,35 @@ export abstract class BaseTest {
       imports: [AppModule],
     }).compile()
 
-    const { data: adminClient } = await axios.post(
-      `${process.env.KEYCLOAK_SERVER_URL}/auth/realms/master/protocol/openid-connect/token`,
-      stringify({
-        client_id: 'admin-cli',
-        grant_type: 'password',
-        username: 'admin',
-        password: 'admin',
-      }),
-      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, timeout: 15000 },
-    )
-
-    const { data: skoreFrontClient } = await axios.post(
-      `${process.env.KEYCLOAK_SERVER_URL}/auth/realms/skore/protocol/openid-connect/token`,
-      stringify({
-        client_id: 'skore-front',
-        grant_type: 'password',
-        username: 'renato',
-        password: 'bilu123',
-      }),
-      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, timeout: 15000 },
-    )
-
     BaseTest.app = await moduleRef.createNestApplication().init()
-    BaseTest.adminToken = adminClient.access_token
-    BaseTest.commonToken = skoreFrontClient.access_token
+
+    try {
+      const { data: adminClient } = await axios.post(
+        `${process.env.KEYCLOAK_SERVER_URL}/auth/realms/master/protocol/openid-connect/token`,
+        stringify({
+          client_id: 'admin-cli',
+          grant_type: 'password',
+          username: 'admin',
+          password: 'admin',
+        }),
+        { headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, timeout: 15000 },
+      )
+
+      BaseTest.adminToken = adminClient.access_token
+
+      const { data: skoreFrontClient } = await axios.post(
+        `${process.env.KEYCLOAK_SERVER_URL}/auth/realms/skore/protocol/openid-connect/token`,
+        stringify({
+          client_id: 'skore-front',
+          grant_type: 'password',
+          username: 'renato',
+          password: 'bilu123',
+        }),
+        { headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, timeout: 15000 },
+      )
+
+      BaseTest.commonToken = skoreFrontClient.access_token
+    } catch {}
   }
 
   before() {
