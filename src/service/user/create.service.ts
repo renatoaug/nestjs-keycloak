@@ -21,6 +21,7 @@ export class CreateUserService {
           {
             username: user.username,
             email: user.email,
+            attributes: user.attributes,
             enabled: true,
           },
           {

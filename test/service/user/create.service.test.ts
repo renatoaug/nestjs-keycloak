@@ -10,11 +10,13 @@ export class CreateUserServiceTest extends BaseTest {
     const service = super.get(CreateUserService)
     const user = new User('renato')
     user.email = 'renato@skore.io'
+    user.attributes = { organization_id: '123456' }
 
     const response = await service.perform('skore', super.adminToken, user)
 
     expect(response.username).toEqual(user.username)
     expect(response.email).toEqual(user.email)
+    expect(response.attributes).toEqual(user.attributes)
   }
 
   @test()

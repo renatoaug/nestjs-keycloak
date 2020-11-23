@@ -10,7 +10,7 @@ export class CreateResourceServiceTest extends BaseTest {
     const service = super.get(CreateResourceService)
     const resource = new Resource('folderId', 'Testing')
     resource.type = 'urn:folders:root'
-    resource['attributes'] = { key: 'value' }
+    resource.attributes = { key: 'value' }
 
     const response = await service.perform(
       'skore',
