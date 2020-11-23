@@ -5,22 +5,20 @@ This project is a nestjs implementation of keycloak.
 ## Installation
 
 ```bash
-$ nvm use
-$ npm install
-```
-
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
+➜ nvm use
+➜ npm install
 ```
 
 ## Test
 
+Make sure the docker is running:
+
 ```bash
-$ npm run test
+➜ docker-compose up -d
+```
+
+Then run:
+
+```bash
+➜ npm run test
 ```
