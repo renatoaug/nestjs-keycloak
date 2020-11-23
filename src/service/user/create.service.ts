@@ -15,13 +15,15 @@ export class CreateUserService {
 
   async perform(realm: string, accessToken: string, user: User): Promise<User> {
     try {
-      await this.httpService
+      const { headers } = await this.httpService
         .post(
           `${this.keycloakServerUrl}/auth/admin/realms/${realm}/users`,
           {
             username: user.username,
             email: user.email,
             attributes: user.attributes,
+            firstName: user.firstName,
+            lastName: user.lastName,
             enabled: true,
           },
           {
@@ -31,6 +33,11 @@ export class CreateUserService {
           },
         )
         .toPromise()
+
+      user.id = headers.location
+        .split('/')
+        .slice(-1)
+        .pop()
 
       return user
     } catch (error) {

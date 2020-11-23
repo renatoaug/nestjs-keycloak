@@ -6,10 +6,19 @@ export class User {
   }
 
   @Expose()
+  id: string
+
+  @Expose()
   username: string
 
   @Expose()
   email?: string
+
+  @Expose({ name: 'first_name' })
+  firstName?: string
+
+  @Expose({ name: 'last_name' })
+  lastName?: string
 
   @Expose()
   attributes?: unknown = {}
