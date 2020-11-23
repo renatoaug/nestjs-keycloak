@@ -6,6 +6,7 @@ import {
   CreateScopeService,
   CheckResourcePermissionService,
   GetUserPermissionsService,
+  CreateUserService,
 } from 'src/service'
 
 @Module({
@@ -16,6 +17,7 @@ import {
     CreatePolicyService,
     CheckResourcePermissionService,
     GetUserPermissionsService,
+    CreateUserService,
   ],
 })
 export class AppModule {}
