@@ -28,7 +28,7 @@ export class CreateResourceService {
             displayName: resource.displayName,
             type: resource.type,
             scopes: resource.scopes,
-            attributes: {},
+            attributes: resource.attributes,
           },
           {
             headers: {

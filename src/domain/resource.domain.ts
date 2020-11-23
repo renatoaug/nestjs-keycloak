@@ -15,6 +15,9 @@ export class Resource {
   @Expose()
   type?: string
 
+  @Expose()
+  attributes?: unknown = {}
+
   @Transform(value => value || [])
   @Expose()
   scopes?: string[] = []
