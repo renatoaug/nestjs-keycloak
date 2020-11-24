@@ -1,12 +1,12 @@
+import { LogicType, DecisionStrategy } from 'src/domain'
+
 export type PolicyType = 'user' | 'group'
-export type LogicType = 'POSITIVE' | 'NEGATIVE'
-export type DecisionStrategyType = 'UNANIMOUS'
 
 export interface PolicyInterface {
   name: string
   type: PolicyType
   logic?: LogicType
-  decisionStrategy?: DecisionStrategyType
+  decisionStrategy?: DecisionStrategy
   groups?: [{ id: string; path: string }]
   users?: string[]
 

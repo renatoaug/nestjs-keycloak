@@ -29,7 +29,7 @@ export class CreatePolicyServiceTest extends BaseTest {
   }
 
   @test()
-  async 'Given an group-based policy then create'() {
+  async 'Given a group-based policy then create'() {
     const group = await new FactoryHelper(super.adminToken).createGroup()
 
     const service = super.get(CreatePolicyService)

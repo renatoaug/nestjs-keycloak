@@ -1,6 +1,7 @@
 import { Injectable, HttpService, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { Policy, PolicyInterface } from 'src/domain'
+import { Policy } from 'src/domain'
+import { PolicyInterface } from 'src/interface'
 
 @Injectable()
 export class CreatePolicyService {

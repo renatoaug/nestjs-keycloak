@@ -7,6 +7,9 @@ export class Resource {
   }
 
   @Expose()
+  id: string
+
+  @Expose()
   name: string
 
   @Expose({ name: 'display_name' })
@@ -16,6 +19,7 @@ export class Resource {
   type?: string
 
   @Expose()
+  @Transform(value => value || {})
   attributes?: unknown = {}
 
   @Transform(value => value || [])

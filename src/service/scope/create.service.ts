@@ -20,7 +20,7 @@ export class CreateScopeService {
     scope: Scope,
   ): Promise<Scope> {
     try {
-      const response = await this.httpService
+      const { data } = await this.httpService
         .post(
           `${this.keycloakServerUrl}/auth/admin/realms/${realm}/clients/${clientId}/authz/resource-server/scope`,
           {
@@ -34,7 +34,7 @@ export class CreateScopeService {
         )
         .toPromise()
 
-      return response.data as Scope
+      return data as Scope
     } catch (error) {
       Logger.error('Error on trying to create client scope', error, CreateScopeService.name)
 

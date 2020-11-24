@@ -1,9 +1,6 @@
 import { Expose } from 'class-transformer'
-import { PolicyInterface } from 'src/domain'
-
-type PolicyType = 'user' | 'group'
-type LogicType = 'POSITIVE' | 'NEGATIVE'
-type DecisionStrategyType = 'UNANIMOUS'
+import { PolicyInterface, PolicyType } from 'src/interface'
+import { DecisionStrategy, LogicType } from 'src/domain'
 
 export class Policy implements PolicyInterface {
   constructor(name: string, type: PolicyType) {
@@ -18,10 +15,10 @@ export class Policy implements PolicyInterface {
   type: PolicyType
 
   @Expose({ name: 'decision_strategy' })
-  decisionStrategy?: DecisionStrategyType = 'UNANIMOUS'
+  decisionStrategy?: DecisionStrategy = DecisionStrategy.UNANIMOUS
 
   @Expose()
-  logic?: LogicType = 'POSITIVE'
+  logic?: LogicType = LogicType.POSITIVE
 
   isGroup(): boolean {
     return this.type === 'group'

@@ -40,7 +40,9 @@ export class CreateResourceService {
         )
         .toPromise()
 
-      return data as Resource
+      resource.id = data._id
+
+      return resource
     } catch (error) {
       Logger.error('Error on trying to create client resource', error, CreateResourceService.name)
 
