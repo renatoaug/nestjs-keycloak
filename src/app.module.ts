@@ -10,6 +10,7 @@ import {
   CreateGroupService,
   CreatePermissionService,
 } from 'src/service'
+import { KeycloakClient } from 'src/client'
 
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true }), HttpModule],
@@ -22,6 +23,7 @@ import {
     CreateUserService,
     CreateGroupService,
     CreatePermissionService,
+    KeycloakClient,
   ],
 })
 export class AppModule {}

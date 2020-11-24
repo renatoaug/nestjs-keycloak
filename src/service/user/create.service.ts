@@ -25,6 +25,13 @@ export class CreateUserService {
             firstName: user.firstName,
             lastName: user.lastName,
             enabled: true,
+            credentials: [
+              {
+                type: 'password',
+                value: 'bilu123',
+                temporary: false,
+              },
+            ],
           },
           {
             headers: {

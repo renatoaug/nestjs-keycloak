@@ -24,5 +24,5 @@ export class Resource {
 
   @Transform(value => value || [])
   @Expose()
-  scopes?: string[] = []
+  scopes?: [{ id: string; name: string }]
 }
