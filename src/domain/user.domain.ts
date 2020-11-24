@@ -14,6 +14,9 @@ export class User {
   @Expose()
   email?: string
 
+  @Expose()
+  password: string
+
   @Expose({ name: 'first_name' })
   firstName?: string
 

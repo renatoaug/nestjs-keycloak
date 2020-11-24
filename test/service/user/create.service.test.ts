@@ -14,16 +14,12 @@ export class CreateUserServiceTest extends BaseTest {
     user.email = faker.internet.email()
     user.firstName = faker.name.firstName()
     user.lastName = faker.name.lastName()
+    user.password = 'secret123'
     user.attributes = { organization_id: '123456' }
 
     const response = await service.perform('skore', super.adminToken, user)
 
     expect(response.id).toBeDefined()
-    expect(response.username).toEqual(user.username)
-    expect(response.email).toEqual(user.email)
-    expect(response.firstName).toEqual(user.firstName)
-    expect(response.lastName).toEqual(user.lastName)
-    expect(response.attributes).toEqual(user.attributes)
   }
 
   @test()

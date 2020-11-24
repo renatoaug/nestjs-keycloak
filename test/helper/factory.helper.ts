@@ -28,7 +28,11 @@ export class FactoryHelper {
     const app = await this.createNestApplication()
     const service = app.get(CreateUserService)
 
-    return service.perform('skore', this.accessToken, new User(faker.internet.userName()))
+    return service.perform(
+      'skore',
+      this.accessToken,
+      plainToClass(User, { username: faker.internet.userName(), password: 'bilu123' }),
+    )
   }
 
   async createGroup(): Promise<Group> {
@@ -83,23 +87,7 @@ export class FactoryHelper {
     )
   }
 
-  async createResource(): Promise<Resource> {
-    const app = await this.createNestApplication()
-    const service = app.get(CreateResourceService)
-
-    return service.perform(
-      'skore',
-      '7a167d98-54d7-4a8a-8464-d25a24b26385',
-      this.accessToken,
-      plainToClass(Resource, {
-        name: faker.name.title(),
-        display_name: faker.random.word(),
-        type: 'urn:folders:root',
-      }),
-    )
-  }
-
-  async createResourceWithScopes(scopes: [{ id: string; name: string }]): Promise<Resource> {
+  async createResource(scopes = []): Promise<Resource> {
     const app = await this.createNestApplication()
     const service = app.get(CreateResourceService)
 

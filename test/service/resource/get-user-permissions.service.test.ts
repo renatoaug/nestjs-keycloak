@@ -17,12 +17,8 @@ export class GetUserPermissionsServiceTest extends BaseTest {
     await new FactoryHelper(super.adminToken).createPermission([scope.id], [policy.id])
 
     const [resource1, resource2] = await Promise.all([
-      new FactoryHelper(super.adminToken).createResourceWithScopes([
-        { id: scope.id, name: scope.name },
-      ]),
-      new FactoryHelper(super.adminToken).createResourceWithScopes([
-        { id: scope.id, name: scope.name },
-      ]),
+      new FactoryHelper(super.adminToken).createResource([{ id: scope.id, name: scope.name }]),
+      new FactoryHelper(super.adminToken).createResource([{ id: scope.id, name: scope.name }]),
     ])
 
     const { access_token: accessToken } = await super

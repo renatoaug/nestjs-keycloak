@@ -16,7 +16,7 @@ export class CheckResourcePermissionServiceTest extends BaseTest {
     const policy = await new FactoryHelper(super.adminToken).createPolicy([user.id])
     await new FactoryHelper(super.adminToken).createPermission([scope.id], [policy.id])
 
-    const resource = await new FactoryHelper(super.adminToken).createResourceWithScopes([
+    const resource = await new FactoryHelper(super.adminToken).createResource([
       { id: scope.id, name: scope.name },
     ])
 
@@ -44,7 +44,7 @@ export class CheckResourcePermissionServiceTest extends BaseTest {
       new FactoryHelper(super.adminToken).createUser(),
     ])
 
-    const resource = await new FactoryHelper(super.adminToken).createResourceWithScopes([
+    const resource = await new FactoryHelper(super.adminToken).createResource([
       { id: scope.id, name: scope.name },
     ])
 

@@ -128,7 +128,7 @@ export class KeycloakClient {
           credentials: [
             {
               type: 'password',
-              value: 'bilu123',
+              value: user.password,
               temporary: false,
             },
           ],
