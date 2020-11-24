@@ -33,7 +33,7 @@ export class GetUserPermissionsService {
     } catch (error) {
       Logger.error('Error on trying to get user permissions', error, GetUserPermissionsService.name)
 
-      throw error
+      return []
     }
   }
 }
