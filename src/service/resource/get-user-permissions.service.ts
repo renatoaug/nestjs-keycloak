@@ -1,17 +1,10 @@
-import { Injectable, HttpService, Logger } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
+import { Injectable, Logger } from '@nestjs/common'
 import { stringify } from 'qs'
+import { KeycloakClient } from 'src/client'
 
 @Injectable()
 export class GetUserPermissionsService {
-  private readonly keycloakServerUrl: string
-
-  constructor(
-    private readonly httpService: HttpService,
-    private readonly configService: ConfigService,
-  ) {
-    this.keycloakServerUrl = this.configService.get('KEYCLOAK_SERVER_URL')
-  }
+  constructor(private readonly keycloakClient: KeycloakClient) {}
 
   async perform(
     realm: string,
@@ -29,18 +22,12 @@ export class GetUserPermissionsService {
 
       for (const resource of resources) params += `&permission=${resource}%23${scope}`
 
-      const { data } = await this.httpService
-        .post(
-          `${this.keycloakServerUrl}/auth/realms/${realm}/protocol/openid-connect/token`,
-          params,
-          {
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-              Authorization: `Bearer ${accessToken}`,
-            },
-          },
-        )
-        .toPromise()
+      const { data } = await this.keycloakClient.getUserPermissions(
+        realm,
+        clientName,
+        accessToken,
+        params,
+      )
 
       return data.map(resource => resource.rsname)
     } catch (error) {

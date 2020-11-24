@@ -6,7 +6,7 @@ module.exports = {
   projects: ['<rootDir>/jest.config.js'],
   collectCoverageFrom: ['src/**/{!(app.module|index|main),}.ts'],
   coveragePathIgnorePatterns: ['/node_modules/', '/test/'],
-  coverageReporters: ['lcovonly'],
+  coverageReporters: ['lcovonly', 'text'],
   coverageThreshold: {
     global: {
       branches: 80,

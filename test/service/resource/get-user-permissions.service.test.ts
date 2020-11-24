@@ -31,6 +31,8 @@ export class GetUserPermissionsServiceTest extends BaseTest {
 
     const service = super.get(GetUserPermissionsService)
 
+    await new Promise(accept => setTimeout(() => accept(), 2000))
+
     const resources = await service.perform(
       'skore',
       'content',

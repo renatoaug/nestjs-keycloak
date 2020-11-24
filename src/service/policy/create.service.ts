@@ -1,18 +1,11 @@
-import { Injectable, HttpService, Logger } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
+import { Injectable, Logger } from '@nestjs/common'
+import { KeycloakClient } from 'src/client'
 import { Policy } from 'src/domain'
 import { PolicyInterface } from 'src/interface'
 
 @Injectable()
 export class CreatePolicyService {
-  private readonly keycloakServerUrl: string
-
-  constructor(
-    private readonly httpService: HttpService,
-    private readonly configService: ConfigService,
-  ) {
-    this.keycloakServerUrl = this.configService.get('KEYCLOAK_SERVER_URL')
-  }
+  constructor(private readonly keycloakClient: KeycloakClient) {}
 
   async perform(
     realm: string,
@@ -31,17 +24,7 @@ export class CreatePolicyService {
       if (policy.isUser()) params['users'] = policy.users
       if (policy.isGroup()) params['groups'] = policy.groups
 
-      const { data } = await this.httpService
-        .post(
-          `${this.keycloakServerUrl}/auth/admin/realms/${realm}/clients/${clientId}/authz/resource-server/policy/${policy.type}`,
-          params,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          },
-        )
-        .toPromise()
+      const { data } = await this.keycloakClient.createPolicy(realm, clientId, accessToken, params)
 
       return data as Policy
     } catch (error) {

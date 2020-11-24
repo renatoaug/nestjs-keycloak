@@ -1,17 +1,10 @@
-import { Injectable, HttpService, Logger } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
+import { Injectable, Logger } from '@nestjs/common'
+import { KeycloakClient } from 'src/client'
 import { Resource } from 'src/domain'
 
 @Injectable()
 export class CreateResourceService {
-  private readonly keycloakServerUrl: string
-
-  constructor(
-    private readonly httpService: HttpService,
-    private readonly configService: ConfigService,
-  ) {
-    this.keycloakServerUrl = this.configService.get('KEYCLOAK_SERVER_URL')
-  }
+  constructor(private readonly keycloakClient: KeycloakClient) {}
 
   async perform(
     realm: string,
@@ -22,23 +15,12 @@ export class CreateResourceService {
     try {
       if (!resource.name || !resource.displayName) throw Error('Name or displayName is missing')
 
-      const { data } = await this.httpService
-        .post(
-          `${this.keycloakServerUrl}/auth/admin/realms/${realm}/clients/${clientId}/authz/resource-server/resource`,
-          {
-            name: resource.name,
-            displayName: resource.displayName,
-            type: resource.type,
-            scopes: resource.scopes,
-            attributes: resource.attributes,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          },
-        )
-        .toPromise()
+      const { data } = await this.keycloakClient.createResource(
+        realm,
+        clientId,
+        accessToken,
+        resource,
+      )
 
       resource.id = data._id
 

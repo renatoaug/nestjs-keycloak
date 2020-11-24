@@ -1,17 +1,10 @@
-import { Injectable, HttpService, Logger } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
+import { Injectable, Logger } from '@nestjs/common'
+import { KeycloakClient } from 'src/client'
 import { Scope } from 'src/domain'
 
 @Injectable()
 export class CreateScopeService {
-  private readonly keycloakServerUrl: string
-
-  constructor(
-    private readonly httpService: HttpService,
-    private readonly configService: ConfigService,
-  ) {
-    this.keycloakServerUrl = this.configService.get('KEYCLOAK_SERVER_URL')
-  }
+  constructor(private readonly keycloakClient: KeycloakClient) {}
 
   async perform(
     realm: string,
@@ -20,19 +13,7 @@ export class CreateScopeService {
     scope: Scope,
   ): Promise<Scope> {
     try {
-      const { data } = await this.httpService
-        .post(
-          `${this.keycloakServerUrl}/auth/admin/realms/${realm}/clients/${clientId}/authz/resource-server/scope`,
-          {
-            name: scope.name,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          },
-        )
-        .toPromise()
+      const { data } = await this.keycloakClient.createScope(realm, clientId, accessToken, scope)
 
       return data as Scope
     } catch (error) {

@@ -1,35 +1,16 @@
-import { Injectable, HttpService, Logger } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
+import { Injectable, Logger } from '@nestjs/common'
+import { KeycloakClient } from 'src/client'
 import { Group } from 'src/domain'
 
 @Injectable()
 export class CreateGroupService {
-  private readonly keycloakServerUrl: string
-
-  constructor(
-    private readonly httpService: HttpService,
-    private readonly configService: ConfigService,
-  ) {
-    this.keycloakServerUrl = this.configService.get('KEYCLOAK_SERVER_URL')
-  }
+  constructor(private readonly keycloakClient: KeycloakClient) {}
 
   async perform(realm: string, accessToken: string, group: Group): Promise<Group> {
     try {
       if (!group.name) throw Error('Name is missing')
 
-      const { headers } = await this.httpService
-        .post(
-          `${this.keycloakServerUrl}/auth/admin/realms/${realm}/groups`,
-          {
-            name: group.name,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          },
-        )
-        .toPromise()
+      const { headers } = await this.keycloakClient.createGroup(realm, accessToken, group)
 
       group.id = headers.location
         .split('/')

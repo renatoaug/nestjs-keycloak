@@ -1,18 +1,11 @@
-import { Injectable, HttpService, Logger } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
+import { Injectable, Logger } from '@nestjs/common'
 import { Permission } from 'src/domain'
+import { KeycloakClient } from 'src/client'
 import { PermissionInterface } from 'src/interface'
 
 @Injectable()
 export class CreatePermissionService {
-  private readonly keycloakServerUrl: string
-
-  constructor(
-    private readonly httpService: HttpService,
-    private readonly configService: ConfigService,
-  ) {
-    this.keycloakServerUrl = this.configService.get('KEYCLOAK_SERVER_URL')
-  }
+  constructor(private readonly keycloakClient: KeycloakClient) {}
 
   async perform(
     realm: string,
@@ -24,26 +17,12 @@ export class CreatePermissionService {
       if (!permission.type) throw Error('Permission type is missing')
       if (permission.isScope() && permission.scopes.length === 0) throw Error('Scopes are missing')
 
-      const { data } = await this.httpService
-        .post(
-          `${this.keycloakServerUrl}/auth/admin/realms/${realm}/clients/${clientId}/authz/resource-server/permission/${permission.type}`,
-          {
-            decisionStrategy: permission.decisionStrategy,
-            logic: permission.logic,
-            name: permission.name,
-            policies: permission.policies,
-            resources: permission.resources,
-            scopes: permission.scopes,
-            type: permission.type,
-            resourceType: permission.resourceType,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          },
-        )
-        .toPromise()
+      const { data } = await this.keycloakClient.createPermission(
+        realm,
+        clientId,
+        accessToken,
+        permission,
+      )
 
       return data as Permission
     } catch (error) {

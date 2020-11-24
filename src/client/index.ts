@@ -1,1 +1,1 @@
-export * from './get-token.client'
+export * from './keycloak.client'

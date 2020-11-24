@@ -1,45 +1,14 @@
-import { Injectable, HttpService, Logger } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
+import { Injectable, Logger } from '@nestjs/common'
+import { KeycloakClient } from 'src/client'
 import { User } from 'src/domain'
 
 @Injectable()
 export class CreateUserService {
-  private readonly keycloakServerUrl: string
-
-  constructor(
-    private readonly httpService: HttpService,
-    private readonly configService: ConfigService,
-  ) {
-    this.keycloakServerUrl = this.configService.get('KEYCLOAK_SERVER_URL')
-  }
+  constructor(private readonly keycloakClient: KeycloakClient) {}
 
   async perform(realm: string, accessToken: string, user: User): Promise<User> {
     try {
-      const { headers } = await this.httpService
-        .post(
-          `${this.keycloakServerUrl}/auth/admin/realms/${realm}/users`,
-          {
-            username: user.username,
-            email: user.email,
-            attributes: user.attributes,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            enabled: true,
-            credentials: [
-              {
-                type: 'password',
-                value: 'bilu123',
-                temporary: false,
-              },
-            ],
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          },
-        )
-        .toPromise()
+      const { headers } = await this.keycloakClient.createUser(realm, accessToken, user)
 
       user.id = headers.location
         .split('/')
