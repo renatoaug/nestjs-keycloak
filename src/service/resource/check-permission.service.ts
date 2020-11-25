@@ -1,9 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common'
-import { KeycloakClient } from 'src/client'
+import { ResourceClient } from 'src/client'
 
 @Injectable()
 export class CheckResourcePermissionService {
-  constructor(private readonly keycloakClient: KeycloakClient) {}
+  constructor(private readonly resourceClient: ResourceClient) {}
 
   async perform(
     realm: string,
@@ -13,7 +13,7 @@ export class CheckResourcePermissionService {
     scope: string,
   ): Promise<boolean> {
     try {
-      const { data } = await this.keycloakClient.checkResourcePermission(
+      const { data } = await this.resourceClient.checkUserPermission(
         realm,
         clientName,
         accessToken,
@@ -24,7 +24,7 @@ export class CheckResourcePermissionService {
       return !!data.result
     } catch (error) {
       Logger.error(
-        'Error on trying to get user permissions',
+        'Error on trying to check user permission',
         error,
         CheckResourcePermissionService.name,
       )

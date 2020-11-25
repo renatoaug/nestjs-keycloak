@@ -1,11 +1,11 @@
 import { Injectable, Logger } from '@nestjs/common'
-import { KeycloakClient } from 'src/client'
+import { PolicyClient } from 'src/client'
 import { Policy } from 'src/domain'
 import { PolicyInterface } from 'src/interface'
 
 @Injectable()
 export class CreatePolicyService {
-  constructor(private readonly keycloakClient: KeycloakClient) {}
+  constructor(private readonly policyClient: PolicyClient) {}
 
   async perform(
     realm: string,
@@ -14,17 +14,7 @@ export class CreatePolicyService {
     policy: PolicyInterface,
   ): Promise<Policy> {
     try {
-      const params = {
-        name: policy.name,
-        decisionStrategy: policy.decisionStrategy,
-        logic: policy.logic,
-        type: policy.type,
-      }
-
-      if (policy.isUser()) params['users'] = policy.users
-      if (policy.isGroup()) params['groups'] = policy.groups
-
-      const { data } = await this.keycloakClient.createPolicy(realm, clientId, accessToken, params)
+      const { data } = await this.policyClient.create(realm, clientId, accessToken, policy)
 
       return data as Policy
     } catch (error) {

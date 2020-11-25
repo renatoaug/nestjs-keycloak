@@ -1,14 +1,14 @@
 import { Injectable, Logger } from '@nestjs/common'
-import { KeycloakClient } from 'src/client'
+import { UserClient } from 'src/client'
 import { User } from 'src/domain'
 
 @Injectable()
 export class CreateUserService {
-  constructor(private readonly keycloakClient: KeycloakClient) {}
+  constructor(private readonly userClient: UserClient) {}
 
   async perform(realm: string, accessToken: string, user: User): Promise<User> {
     try {
-      const { headers } = await this.keycloakClient.createUser(realm, accessToken, user)
+      const { headers } = await this.userClient.create(realm, accessToken, user)
 
       user.id = headers.location
         .split('/')

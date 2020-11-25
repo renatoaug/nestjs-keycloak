@@ -2,7 +2,7 @@ import { suite, test } from '@testdeck/jest'
 import { BaseTest } from 'test/base-test'
 import { FactoryHelper } from 'test/helper'
 import { GetUserPermissionsService } from 'src/service'
-import { KeycloakClient } from 'src/client'
+import { UserClient } from 'src/client'
 
 @suite('Get User Permissions Service')
 export class GetUserPermissionsServiceTest extends BaseTest {
@@ -21,9 +21,9 @@ export class GetUserPermissionsServiceTest extends BaseTest {
       new FactoryHelper(super.adminToken).createResource([{ id: scope.id, name: scope.name }]),
     ])
 
-    const { access_token: accessToken } = await super
-      .get(KeycloakClient)
-      .getToken('skore', 'skore-front', user.username, 'bilu123')
+    const {
+      data: { access_token: accessToken },
+    } = await super.get(UserClient).getToken('skore', 'skore-front', user.username, 'bilu123')
 
     const service = super.get(GetUserPermissionsService)
 

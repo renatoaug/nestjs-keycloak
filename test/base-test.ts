@@ -1,7 +1,7 @@
 import { INestApplication, Type } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
 import { AppModule } from 'src/app.module'
-import { KeycloakClient } from 'src/client'
+import { UserClient } from 'src/client'
 
 export abstract class BaseTest {
   static app: INestApplication
@@ -16,11 +16,11 @@ export abstract class BaseTest {
 
     BaseTest.app = await moduleRef.createNestApplication().init()
 
-    const response = await BaseTest.app
-      .get(KeycloakClient)
+    const { data } = await BaseTest.app
+      .get(UserClient)
       .getToken('master', 'admin-cli', 'admin', 'admin')
 
-    BaseTest.adminToken = response['access_token']
+    BaseTest.adminToken = data.access_token
   }
 
   before() {

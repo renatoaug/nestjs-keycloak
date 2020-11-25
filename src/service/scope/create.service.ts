@@ -1,10 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common'
-import { KeycloakClient } from 'src/client'
+import { ScopeClient } from 'src/client'
 import { Scope } from 'src/domain'
 
 @Injectable()
 export class CreateScopeService {
-  constructor(private readonly keycloakClient: KeycloakClient) {}
+  constructor(private readonly scopeClient: ScopeClient) {}
 
   async perform(
     realm: string,
@@ -13,7 +13,7 @@ export class CreateScopeService {
     scope: Scope,
   ): Promise<Scope> {
     try {
-      const { data } = await this.keycloakClient.createScope(realm, clientId, accessToken, scope)
+      const { data } = await this.scopeClient.create(realm, clientId, accessToken, scope)
 
       return data as Scope
     } catch (error) {

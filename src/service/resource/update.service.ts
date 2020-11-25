@@ -1,10 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common'
-import { ResourceClient } from 'src/client'
+import { KeycloakClient } from 'src/client'
 import { Resource } from 'src/domain'
 
 @Injectable()
 export class CreateResourceService {
-  constructor(private readonly resourceClient: ResourceClient) {}
+  constructor(private readonly keycloakClient: KeycloakClient) {}
 
   async perform(
     realm: string,
@@ -15,7 +15,12 @@ export class CreateResourceService {
     try {
       if (!resource.name || !resource.displayName) throw Error('Name or displayName is missing')
 
-      const { data } = await this.resourceClient.create(realm, clientId, accessToken, resource)
+      const { data } = await this.keycloakClient.createResource(
+        realm,
+        clientId,
+        accessToken,
+        resource,
+      )
 
       resource.id = data._id
 

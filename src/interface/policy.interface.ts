@@ -9,7 +9,4 @@ export interface PolicyInterface {
   decisionStrategy?: DecisionStrategy
   groups?: [{ id: string; path: string }]
   users?: string[]
-
-  isGroup(): boolean
-  isUser(): boolean
 }

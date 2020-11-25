@@ -7,5 +7,5 @@ export class UserPolicy extends Policy {
   }
 
   @Expose()
-  users?: string[]
+  users?: string[] = []
 }

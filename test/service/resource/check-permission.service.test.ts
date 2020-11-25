@@ -2,7 +2,7 @@ import { suite, test } from '@testdeck/jest'
 import { BaseTest } from 'test/base-test'
 import { FactoryHelper } from 'test/helper'
 import { CheckResourcePermissionService } from 'src/service'
-import { KeycloakClient } from 'src/client'
+import { UserClient } from 'src/client'
 
 @suite('Check Resource Permission Service')
 export class CheckResourcePermissionServiceTest extends BaseTest {
@@ -20,9 +20,9 @@ export class CheckResourcePermissionServiceTest extends BaseTest {
       { id: scope.id, name: scope.name },
     ])
 
-    const { access_token: accessToken } = await super
-      .get(KeycloakClient)
-      .getToken('skore', 'skore-front', user.username, 'bilu123')
+    const {
+      data: { access_token: accessToken },
+    } = await super.get(UserClient).getToken('skore', 'skore-front', user.username, 'bilu123')
 
     const service = super.get(CheckResourcePermissionService)
 
@@ -48,9 +48,9 @@ export class CheckResourcePermissionServiceTest extends BaseTest {
       { id: scope.id, name: scope.name },
     ])
 
-    const { access_token: accessToken } = await super
-      .get(KeycloakClient)
-      .getToken('skore', 'skore-front', user.username, 'bilu123')
+    const {
+      data: { access_token: accessToken },
+    } = await super.get(UserClient).getToken('skore', 'skore-front', user.username, 'bilu123')
 
     const service = super.get(CheckResourcePermissionService)
 

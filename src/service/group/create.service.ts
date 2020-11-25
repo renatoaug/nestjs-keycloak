@@ -1,16 +1,16 @@
 import { Injectable, Logger } from '@nestjs/common'
-import { KeycloakClient } from 'src/client'
+import { GroupClient } from 'src/client'
 import { Group } from 'src/domain'
 
 @Injectable()
 export class CreateGroupService {
-  constructor(private readonly keycloakClient: KeycloakClient) {}
+  constructor(private readonly groupClient: GroupClient) {}
 
   async perform(realm: string, accessToken: string, group: Group): Promise<Group> {
     try {
       if (!group.name) throw Error('Name is missing')
 
-      const { headers } = await this.keycloakClient.createGroup(realm, accessToken, group)
+      const { headers } = await this.groupClient.create(realm, accessToken, group)
 
       group.id = headers.location
         .split('/')

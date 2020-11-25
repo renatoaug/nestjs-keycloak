@@ -12,7 +12,15 @@ import {
   CreateGroupService,
   CreatePermissionService,
 } from 'src/service'
-import { KeycloakClient } from 'src/client'
+import {
+  GroupClient,
+  KeycloakClient,
+  PermissionClient,
+  PolicyClient,
+  ResourceClient,
+  ScopeClient,
+  UserClient,
+} from 'src/client'
 import { ResourceResolver } from 'src/resolver'
 
 @Module({
@@ -36,6 +44,12 @@ import { ResourceResolver } from 'src/resolver'
     CreateGroupService,
     CreatePermissionService,
     KeycloakClient,
+    GroupClient,
+    UserClient,
+    ScopeClient,
+    PermissionClient,
+    PolicyClient,
+    ResourceClient,
     ResourceResolver,
   ],
 })

@@ -24,12 +24,4 @@ export class Policy implements PolicyInterface {
   @Expose()
   @Transform(value => value || LogicType.POSITIVE)
   logic?: LogicType = LogicType.POSITIVE
-
-  isGroup(): boolean {
-    return this.type === 'group'
-  }
-
-  isUser(): boolean {
-    return this.type === 'user'
-  }
 }

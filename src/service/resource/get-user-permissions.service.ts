@@ -1,10 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { stringify } from 'qs'
-import { KeycloakClient } from 'src/client'
+import { ResourceClient } from 'src/client'
 
 @Injectable()
 export class GetUserPermissionsService {
-  constructor(private readonly keycloakClient: KeycloakClient) {}
+  constructor(private readonly resourceClient: ResourceClient) {}
 
   async perform(
     realm: string,
@@ -22,12 +22,7 @@ export class GetUserPermissionsService {
 
       for (const resource of resources) params += `&permission=${resource}%23${scope}`
 
-      const { data } = await this.keycloakClient.getUserPermissions(
-        realm,
-        clientName,
-        accessToken,
-        params,
-      )
+      const { data } = await this.resourceClient.getUserPermissions(realm, accessToken, params)
 
       return data.map(resource => resource.rsname)
     } catch (error) {

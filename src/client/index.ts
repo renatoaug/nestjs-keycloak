@@ -1,1 +1,7 @@
 export * from './keycloak.client'
+export * from './group.client'
+export * from './permission.client'
+export * from './policy.client'
+export * from './user.client'
+export * from './resource.client'
+export * from './scope.client'
