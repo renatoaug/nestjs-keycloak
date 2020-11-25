@@ -29,6 +29,29 @@ export class ResourceClient extends KeycloakClient {
     )
   }
 
+  update(
+    realm: string,
+    clientId: string,
+    accessToken: string,
+    resource: Resource,
+  ): Promise<AxiosResponse> {
+    return super.put(
+      `/auth/admin/realms/${realm}/clients/${clientId}/authz/resource-server/resource/${resource.id}`,
+      {
+        name: resource.name,
+        displayName: resource.displayName,
+        type: resource.type,
+        scopes: resource.scopes,
+        attributes: resource.attributes,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    )
+  }
+
   getUserPermissions(realm: string, accessToken: string, params: unknown): Promise<AxiosResponse> {
     return super.post(`/auth/realms/${realm}/protocol/openid-connect/token`, params, {
       headers: {

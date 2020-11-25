@@ -803,36 +803,7 @@
       "authorizationSettings": {
         "allowRemoteResourceManagement": true,
         "policyEnforcementMode": "ENFORCING",
-        "resources": [
-          {
-            "name": "1",
-            "type": "urn:content:resources:folder:1:contents",
-            "ownerManagedAccess": false,
-            "displayName": "1",
-            "attributes": {},
-            "_id": "18ee88a4-cd72-4e0d-9304-15abe6101b45",
-            "uris": [],
-            "scopes": [
-              {
-                "name": "hasScope"
-              }
-            ]
-          },
-          {
-            "name": "content",
-            "type": "urn:content:resources:folder:1:contents",
-            "ownerManagedAccess": false,
-            "displayName": "content",
-            "attributes": {},
-            "_id": "9fb6195c-0c07-45d7-af1c-dd1506f31251",
-            "uris": [],
-            "scopes": [
-              {
-                "name": "resourceScope"
-              }
-            ]
-          }
-        ],
+        "resources": [],
         "policies": [
           {
             "id": "72e01a5a-211a-4657-8452-1a4174cbe0fd",
@@ -856,17 +827,7 @@
             }
           }
         ],
-        "scopes": [
-          {
-            "id": "ceeaea14-117a-46e3-9509-cc2bd1126dac",
-            "name": "resourceScope"
-          },
-          {
-            "id": "f2ee711b-c731-4509-a3eb-f313933f7d42",
-            "name": "hasScope",
-            "displayName": "hasScope"
-          }
-        ],
+        "scopes": [],
         "decisionStrategy": "UNANIMOUS"
       }
     },
