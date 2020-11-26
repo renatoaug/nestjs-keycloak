@@ -44,6 +44,19 @@ export class ResourceClient extends KeycloakClient {
     )
   }
 
+  remove(realm: string, accessToken: string, resourceId: string): Promise<AxiosResponse> {
+    return super.delete(
+      `/auth/admin/realms/${realm}/clients/${
+        super.clientId
+      }/authz/resource-server/resource/${resourceId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    )
+  }
+
   getUserPermissions(realm: string, accessToken: string, params: unknown): Promise<AxiosResponse> {
     return super.post(`/auth/realms/${realm}/protocol/openid-connect/token`, params, {
       headers: {

@@ -12,6 +12,7 @@ import {
   CreateGroupService,
   CreatePermissionService,
   UpdateResourceService,
+  DeleteResourceService,
 } from 'src/service'
 import {
   GroupClient,
@@ -45,6 +46,7 @@ import { ResourceResolver } from 'src/resolver'
     CreateGroupService,
     CreatePermissionService,
     UpdateResourceService,
+    DeleteResourceService,
     KeycloakClient,
     GroupClient,
     UserClient,

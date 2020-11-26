@@ -9,9 +9,8 @@ import * as faker from 'faker'
 @suite('Update Resource Service')
 export class UpdateResourceServiceTest extends BaseTest {
   @test()
-  async 'Given a valid resource then create'() {
+  async 'Given a valid resource then update'() {
     const resource = await new FactoryHelper(super.adminToken).createResource()
-
     const service = super.get(UpdateResourceService)
 
     const response = await service.perform(
@@ -25,7 +24,7 @@ export class UpdateResourceServiceTest extends BaseTest {
       }),
     )
 
-    expect(response).toBeTruthy()
+    expect(response).toBeUndefined()
   }
 
   @test()
