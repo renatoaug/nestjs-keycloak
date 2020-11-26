@@ -46,12 +46,7 @@ export class FactoryHelper {
     const app = await this.createNestApplication()
     const service = app.get(CreateScopeService)
 
-    return service.perform(
-      'skore',
-      '7a167d98-54d7-4a8a-8464-d25a24b26385',
-      this.accessToken,
-      new Scope(faker.hacker.verb()),
-    )
+    return service.perform('skore', this.accessToken, new Scope(faker.hacker.verb()))
   }
 
   async createPolicy(userIds: string[]): Promise<Policy> {
@@ -60,7 +55,6 @@ export class FactoryHelper {
 
     return service.perform(
       'skore',
-      '7a167d98-54d7-4a8a-8464-d25a24b26385',
       this.accessToken,
       plainToClass(UserPolicy, {
         name: faker.name.title(),
@@ -76,7 +70,6 @@ export class FactoryHelper {
 
     return service.perform(
       'skore',
-      '7a167d98-54d7-4a8a-8464-d25a24b26385',
       this.accessToken,
       plainToClass(ScopePermission, {
         name: faker.name.title(),
@@ -93,7 +86,6 @@ export class FactoryHelper {
 
     return service.perform(
       'skore',
-      '7a167d98-54d7-4a8a-8464-d25a24b26385',
       this.accessToken,
       plainToClass(Resource, {
         name: faker.name.title(),

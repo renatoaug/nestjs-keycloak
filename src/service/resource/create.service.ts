@@ -6,16 +6,11 @@ import { Resource } from 'src/domain'
 export class CreateResourceService {
   constructor(private readonly resourceClient: ResourceClient) {}
 
-  async perform(
-    realm: string,
-    clientId: string,
-    accessToken: string,
-    resource: Resource,
-  ): Promise<Resource> {
+  async perform(realm: string, accessToken: string, resource: Resource): Promise<Resource> {
     try {
       if (!resource.name || !resource.displayName) throw Error('Name or displayName is missing')
 
-      const { data } = await this.resourceClient.create(realm, clientId, accessToken, resource)
+      const { data } = await this.resourceClient.create(realm, accessToken, resource)
 
       resource.id = data._id
 

@@ -7,7 +7,6 @@ export class CheckResourcePermissionService {
 
   async perform(
     realm: string,
-    clientName: string,
     accessToken: string,
     resource: string,
     scope: string,
@@ -15,7 +14,6 @@ export class CheckResourcePermissionService {
     try {
       const { data } = await this.resourceClient.checkUserPermission(
         realm,
-        clientName,
         accessToken,
         resource,
         scope,

@@ -13,12 +13,7 @@ export class CreateResourceServiceTest extends BaseTest {
     resource.type = 'urn:folders:root'
     resource.attributes = { key: 'value' }
 
-    const response = await service.perform(
-      'skore',
-      '7a167d98-54d7-4a8a-8464-d25a24b26385',
-      super.adminToken,
-      resource,
-    )
+    const response = await service.perform('skore', super.adminToken, resource)
 
     expect(response.name).toEqual(resource.name)
     expect(response.type).toEqual(resource.type)
@@ -32,12 +27,7 @@ export class CreateResourceServiceTest extends BaseTest {
     const resource = new Resource(null, faker.random.word())
 
     try {
-      await service.perform(
-        'skore',
-        '7a167d98-54d7-4a8a-8464-d25a24b26385',
-        super.adminToken,
-        resource,
-      )
+      await service.perform('skore', super.adminToken, resource)
     } catch (error) {
       expect(error.message).toEqual('Name or displayName is missing')
     }

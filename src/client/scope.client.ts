@@ -5,14 +5,9 @@ import { KeycloakClient } from './keycloak.client'
 
 @Injectable()
 export class ScopeClient extends KeycloakClient {
-  create(
-    realm: string,
-    clientId: string,
-    accessToken: string,
-    scope: Scope,
-  ): Promise<AxiosResponse> {
+  create(realm: string, accessToken: string, scope: Scope): Promise<AxiosResponse> {
     return super.post(
-      `/auth/admin/realms/${realm}/clients/${clientId}/authz/resource-server/scope`,
+      `/auth/admin/realms/${realm}/clients/${super.clientId}/authz/resource-server/scope`,
       {
         name: scope.name,
       },

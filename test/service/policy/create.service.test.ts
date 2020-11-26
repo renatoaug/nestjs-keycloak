@@ -15,12 +15,7 @@ export class CreatePolicyServiceTest extends BaseTest {
     const policy = new UserPolicy(faker.name.title())
     policy.users = [user.id]
 
-    const response = await service.perform(
-      'skore',
-      '7a167d98-54d7-4a8a-8464-d25a24b26385',
-      super.adminToken,
-      policy,
-    )
+    const response = await service.perform('skore', super.adminToken, policy)
 
     expect(response.name).toEqual(policy.name)
     expect(response.type).toEqual(policy.type)
@@ -36,12 +31,7 @@ export class CreatePolicyServiceTest extends BaseTest {
     const policy = new GroupPolicy(faker.name.title())
     policy.groups = [{ id: group.id, path: `/${group.name}` }]
 
-    const response = await service.perform(
-      'skore',
-      '7a167d98-54d7-4a8a-8464-d25a24b26385',
-      super.adminToken,
-      policy,
-    )
+    const response = await service.perform('skore', super.adminToken, policy)
 
     expect(response.name).toEqual(policy.name)
     expect(response.type).toEqual(policy.type)

@@ -7,10 +7,6 @@ export class CheckResourcePermissionDto {
   @Field()
   realm: string
 
-  @Expose({ name: 'client_name' })
-  @Field({ name: 'client_name' })
-  clientName: string
-
   @Expose()
   @Field()
   resource: string

@@ -7,14 +7,9 @@ import { PolicyInterface } from 'src/interface'
 export class CreatePolicyService {
   constructor(private readonly policyClient: PolicyClient) {}
 
-  async perform(
-    realm: string,
-    clientId: string,
-    accessToken: string,
-    policy: PolicyInterface,
-  ): Promise<Policy> {
+  async perform(realm: string, accessToken: string, policy: PolicyInterface): Promise<Policy> {
     try {
-      const { data } = await this.policyClient.create(realm, clientId, accessToken, policy)
+      const { data } = await this.policyClient.create(realm, accessToken, policy)
 
       return data as Policy
     } catch (error) {

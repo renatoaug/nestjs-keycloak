@@ -21,7 +21,6 @@ export class ResourceResolver {
 
     return this.getUserPermissionsService.perform(
       args.realm,
-      args.clientName,
       headers.authorization.split(' ').pop(),
       args.resources,
       args.scope,
@@ -38,7 +37,6 @@ export class ResourceResolver {
 
     return this.checkResourcePermissionService.perform(
       args.realm,
-      args.clientName,
       headers.authorization.split(' ').pop(),
       args.resource,
       args.scope,

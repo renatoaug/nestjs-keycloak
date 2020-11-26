@@ -16,7 +16,6 @@ export class UpdateResourceServiceTest extends BaseTest {
 
     const response = await service.perform(
       'skore',
-      '7a167d98-54d7-4a8a-8464-d25a24b26385',
       super.adminToken,
       plainToClass(Resource, {
         id: resource.id,
@@ -36,7 +35,6 @@ export class UpdateResourceServiceTest extends BaseTest {
     try {
       await service.perform(
         'skore',
-        '7a167d98-54d7-4a8a-8464-d25a24b26385',
         super.adminToken,
         plainToClass(Resource, {
           id: 'not_found',

@@ -6,14 +6,9 @@ import { KeycloakClient } from './keycloak.client'
 
 @Injectable()
 export class ResourceClient extends KeycloakClient {
-  create(
-    realm: string,
-    clientId: string,
-    accessToken: string,
-    resource: Resource,
-  ): Promise<AxiosResponse> {
+  create(realm: string, accessToken: string, resource: Resource): Promise<AxiosResponse> {
     return super.post(
-      `/auth/admin/realms/${realm}/clients/${clientId}/authz/resource-server/resource`,
+      `/auth/admin/realms/${realm}/clients/${super.clientId}/authz/resource-server/resource`,
       {
         name: resource.name,
         displayName: resource.displayName,
@@ -29,14 +24,11 @@ export class ResourceClient extends KeycloakClient {
     )
   }
 
-  update(
-    realm: string,
-    clientId: string,
-    accessToken: string,
-    resource: Resource,
-  ): Promise<AxiosResponse> {
+  update(realm: string, accessToken: string, resource: Resource): Promise<AxiosResponse> {
     return super.put(
-      `/auth/admin/realms/${realm}/clients/${clientId}/authz/resource-server/resource/${resource.id}`,
+      `/auth/admin/realms/${realm}/clients/${super.clientId}/authz/resource-server/resource/${
+        resource.id
+      }`,
       {
         name: resource.name,
         displayName: resource.displayName,
@@ -63,7 +55,6 @@ export class ResourceClient extends KeycloakClient {
 
   checkUserPermission(
     realm: string,
-    clientName: string,
     accessToken: string,
     resource: string,
     scope: string,
@@ -73,7 +64,7 @@ export class ResourceClient extends KeycloakClient {
       stringify({
         grant_type: 'urn:ietf:params:oauth:grant-type:uma-ticket',
         response_mode: 'decision',
-        audience: clientName,
+        audience: super.clientName,
         permission: `${resource}#${scope}`,
       }),
       {

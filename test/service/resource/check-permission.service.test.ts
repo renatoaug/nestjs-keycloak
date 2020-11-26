@@ -26,13 +26,7 @@ export class CheckResourcePermissionServiceTest extends BaseTest {
 
     const service = super.get(CheckResourcePermissionService)
 
-    const hasAccess = await service.perform(
-      'skore',
-      'content',
-      accessToken,
-      resource.name,
-      scope.name,
-    )
+    const hasAccess = await service.perform('skore', accessToken, resource.name, scope.name)
 
     expect(hasAccess).toBeTruthy()
   }
@@ -54,13 +48,7 @@ export class CheckResourcePermissionServiceTest extends BaseTest {
 
     const service = super.get(CheckResourcePermissionService)
 
-    const hasAccess = await service.perform(
-      'skore',
-      'content',
-      accessToken,
-      resource.name,
-      scope.name,
-    )
+    const hasAccess = await service.perform('skore', accessToken, resource.name, scope.name)
 
     expect(hasAccess).toBeFalsy()
   }

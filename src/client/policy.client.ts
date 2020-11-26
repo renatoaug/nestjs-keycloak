@@ -5,14 +5,11 @@ import { KeycloakClient } from './keycloak.client'
 
 @Injectable()
 export class PolicyClient extends KeycloakClient {
-  create(
-    realm: string,
-    clientId: string,
-    accessToken: string,
-    params: PolicyInterface,
-  ): Promise<AxiosResponse> {
+  create(realm: string, accessToken: string, params: PolicyInterface): Promise<AxiosResponse> {
     return super.post(
-      `/auth/admin/realms/${realm}/clients/${clientId}/authz/resource-server/policy/${params['type']}`,
+      `/auth/admin/realms/${realm}/clients/${super.clientId}/authz/resource-server/policy/${
+        params['type']
+      }`,
       params,
       {
         headers: {

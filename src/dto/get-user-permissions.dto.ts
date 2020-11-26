@@ -7,10 +7,6 @@ export class GetUserPermissionsDto {
   @Field()
   realm: string
 
-  @Expose({ name: 'client_name' })
-  @Field({ name: 'client_name' })
-  clientName: string
-
   @Expose()
   @Field(() => [String])
   resources: string[]

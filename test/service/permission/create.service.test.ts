@@ -15,12 +15,7 @@ export class CreatePermissionServiceTest extends BaseTest {
     const permission = new ScopePermission(faker.name.title())
     permission.scopes = [scope.id]
 
-    const response = await service.perform(
-      'skore',
-      '7a167d98-54d7-4a8a-8464-d25a24b26385',
-      super.adminToken,
-      permission,
-    )
+    const response = await service.perform('skore', super.adminToken, permission)
 
     expect(response.name).toEqual(permission.name)
     expect(response.type).toEqual(permission.type)
@@ -35,12 +30,7 @@ export class CreatePermissionServiceTest extends BaseTest {
     const permission = new ScopePermission(faker.name.title())
 
     try {
-      await service.perform(
-        'skore',
-        '7a167d98-54d7-4a8a-8464-d25a24b26385',
-        super.adminToken,
-        permission,
-      )
+      await service.perform('skore', super.adminToken, permission)
     } catch (error) {
       expect(error.message).toEqual('Scopes are missing')
     }
@@ -55,12 +45,7 @@ export class CreatePermissionServiceTest extends BaseTest {
     const permission = new ResourcePermission(faker.name.title())
     permission.resources = [resource.id]
 
-    const response = await service.perform(
-      'skore',
-      '7a167d98-54d7-4a8a-8464-d25a24b26385',
-      super.adminToken,
-      permission,
-    )
+    const response = await service.perform('skore', super.adminToken, permission)
 
     expect(response.name).toEqual(permission.name)
     expect(response.type).toEqual(permission.type)
@@ -78,12 +63,7 @@ export class CreatePermissionServiceTest extends BaseTest {
     const permission = new ResourcePermission(faker.name.title())
     permission.resourceType = resource.type
 
-    const response = await service.perform(
-      'skore',
-      '7a167d98-54d7-4a8a-8464-d25a24b26385',
-      super.adminToken,
-      permission,
-    )
+    const response = await service.perform('skore', super.adminToken, permission)
 
     expect(response.name).toEqual(permission.name)
     expect(response.type).toEqual(permission.type)

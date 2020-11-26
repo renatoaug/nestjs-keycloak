@@ -7,12 +7,13 @@ import { KeycloakClient } from './keycloak.client'
 export class PermissionClient extends KeycloakClient {
   create(
     realm: string,
-    clientId: string,
     accessToken: string,
     permission: PermissionInterface,
   ): Promise<AxiosResponse> {
     return super.post(
-      `/auth/admin/realms/${realm}/clients/${clientId}/authz/resource-server/permission/${permission.type}`,
+      `/auth/admin/realms/${realm}/clients/${super.clientId}/authz/resource-server/permission/${
+        permission.type
+      }`,
       {
         decisionStrategy: permission.decisionStrategy,
         logic: permission.logic,

@@ -9,7 +9,6 @@ export class CreatePermissionService {
 
   async perform(
     realm: string,
-    clientId: string,
     accessToken: string,
     permission: PermissionInterface,
   ): Promise<Permission> {
@@ -17,7 +16,7 @@ export class CreatePermissionService {
       if (!permission.type) throw Error('Permission type is missing')
       if (permission.isScope() && permission.scopes.length === 0) throw Error('Scopes are missing')
 
-      const { data } = await this.permissionClient.create(realm, clientId, accessToken, permission)
+      const { data } = await this.permissionClient.create(realm, accessToken, permission)
 
       return data as Permission
     } catch (error) {

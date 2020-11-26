@@ -31,7 +31,6 @@ export class GetUserPermissionsServiceTest extends BaseTest {
 
     const resources = await service.perform(
       'skore',
-      'content',
       accessToken,
       [resource1.name, resource2.name],
       scope.name,

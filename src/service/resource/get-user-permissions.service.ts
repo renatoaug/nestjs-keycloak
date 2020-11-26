@@ -1,14 +1,17 @@
 import { Injectable, Logger } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
 import { stringify } from 'qs'
 import { ResourceClient } from 'src/client'
 
 @Injectable()
 export class GetUserPermissionsService {
-  constructor(private readonly resourceClient: ResourceClient) {}
+  constructor(
+    private readonly resourceClient: ResourceClient,
+    private readonly configService: ConfigService,
+  ) {}
 
   async perform(
     realm: string,
-    clientName: string,
     accessToken: string,
     resources: string[],
     scope: string,
@@ -16,7 +19,7 @@ export class GetUserPermissionsService {
     try {
       let params = stringify({
         grant_type: 'urn:ietf:params:oauth:grant-type:uma-ticket',
-        audience: clientName,
+        audience: this.configService.get('KEYCLOAK_CLIENT_NAME'),
         response_mode: 'permissions',
       })
 

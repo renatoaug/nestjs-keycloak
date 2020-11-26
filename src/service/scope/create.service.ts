@@ -6,14 +6,9 @@ import { Scope } from 'src/domain'
 export class CreateScopeService {
   constructor(private readonly scopeClient: ScopeClient) {}
 
-  async perform(
-    realm: string,
-    clientId: string,
-    accessToken: string,
-    scope: Scope,
-  ): Promise<Scope> {
+  async perform(realm: string, accessToken: string, scope: Scope): Promise<Scope> {
     try {
-      const { data } = await this.scopeClient.create(realm, clientId, accessToken, scope)
+      const { data } = await this.scopeClient.create(realm, accessToken, scope)
 
       return data as Scope
     } catch (error) {
